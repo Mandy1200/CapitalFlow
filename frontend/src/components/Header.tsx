@@ -21,7 +21,6 @@ export default function Header({ organizations, current, onChange, disabled }: P
             <p className="text-xl font-semibold tracking-tight">
               Capital<span className="text-blue-300">Flow</span>
             </p>
-            <p className="text-sm text-slate-300">Capital Call Reconciliation</p>
           </div>
         </div>
 
