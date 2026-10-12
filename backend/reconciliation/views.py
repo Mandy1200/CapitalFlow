@@ -44,6 +44,26 @@ class HealthView(APIView):
         return Response({"status": "ok", "database": "ok"})
 
 
+class ApiRootView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        return Response({
+            "name": "CapitalFlow API",
+            "version": "1.0",
+            "endpoints": {
+                "health": request.build_absolute_uri("health/"),
+                "organizations": request.build_absolute_uri("organizations/"),
+                "imports": request.build_absolute_uri("imports/"),
+                "transactions": request.build_absolute_uri("transactions/"),
+                "line_items": request.build_absolute_uri("line-items/"),
+            },
+            "headers": {
+                "X-Organization": "Required on business endpoints (e.g. 'northwind' or 'bluebird')"
+            }
+        })
+
+
 class OrganizationListView(APIView):
     """Organizations for the switcher. Does not require X-Organization."""
 
