@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "corsheaders",
     "rest_framework",
+    "drf_spectacular",
     "reconciliation",
 ]
 
@@ -68,6 +69,19 @@ TIME_ZONE = "UTC"
 USE_I18N = False
 USE_TZ = True
 
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+            ],
+        },
+    },
+]
+
 # Uploaded CSVs are read in memory; reject anything unreasonably large.
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
@@ -85,7 +99,16 @@ REST_FRAMEWORK = {
     ],
     "EXCEPTION_HANDLER": "reconciliation.exceptions.api_exception_handler",
     "COERCE_DECIMAL_TO_STRING": True,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "CapitalFlow API",
+    "DESCRIPTION": "Bank Reconciliation for Capital Calls - Technical Assessment API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
+
 
 CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173")
 CORS_ALLOW_HEADERS = ["accept", "content-type", "x-organization"]
